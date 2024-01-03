@@ -42,13 +42,15 @@ fn launch_generate(n: usize) {
 
 #[tokio::main(flavor = "multi_thread", worker_threads = 1)]
 async fn main() {
+    let spawned_tasks = 1;
+
     use tracing_subscriber::{fmt::format::FmtSpan, EnvFilter};
     tracing_subscriber::fmt()
         .with_env_filter(EnvFilter::from_default_env())
         .with_span_events(FmtSpan::FULL)
         .init();
 
-    launch_generate(1);
+    launch_generate(spawned_tasks);
     let generator = PlainGenerator;
     eprintln!("Launching main generator");
     let vec = generator.generate();
